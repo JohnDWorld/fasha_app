@@ -1,4 +1,4 @@
-trigger UpdateAccountCA on Order (after update) {
+trigger UpdateAccountCATrigger on Order (after update) {
 	
     set<Id> setAccountIds = new set<Id>();
     
