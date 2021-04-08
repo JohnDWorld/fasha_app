@@ -2,30 +2,36 @@ public abstract class TestDataFactory {
 
     //Account creation
     public static Account createAccount() {
-        Account account = new Account(Name ='Test Account '+Math.random());
+        Account account = new Account(Name ='Test Account');
         return account;
     }
 
-    //Product creation
-    public static Product2 createProduct() {
-        Product2 product = new Product2(Name='Test Product '+Math.random());
+    //Product2 creation
+    public static Product2 createProduct2() {
+        Product2 product = new Product2(
+            Name='Test Product',
+            IsActive=true);
         return product;
     }
 
     //PricebookEntry creation
-    public static PricebookEntry createPriceBook(Product2 product) {
+    public static PricebookEntry createPriceBook(Product2 product2) {
         PricebookEntry priceBook = new PricebookEntry(
-            Pricebook2Id = Test.getStandardPricebookId(),
-            Product2Id = product.Id,
-            UnitPrice = 1000,
-            IsActive = true
-        );
+            Pricebook2Id= Test.getStandardPricebookId(),
+            Product2Id = product2.Id,
+            UnitPrice = 10,
+            IsActive = true);
         return priceBook;
     }
 
     //Order creation
-    public static Order createOrder(Account account) {
-        Order order = new Order(AccountId=account.Id);
+    public static Order createOrder(Account account, PricebookEntry priceBook) {
+        Order order = new Order(
+            Name='Order Test',
+            AccountId=account.Id,
+            Pricebook2Id=priceBook.Pricebook2Id,
+            EffectiveDate=System.today(),
+            Status='Draft');
         return order;
     }
 
@@ -33,9 +39,9 @@ public abstract class TestDataFactory {
     public static OrderItem createOrderItem(Order order, PricebookEntry priceBook) {
         OrderItem orderItem = new OrderItem(
             OrderId=order.Id, 
-            PricebookEntryId=priceBook.Id, 
-            Quantity=10,
-            UnitPrice=150);
+            PricebookEntryId=priceBook.Id,
+            Quantity=1,
+            UnitPrice=10);
         return orderItem;
     }
 
@@ -43,31 +49,34 @@ public abstract class TestDataFactory {
     public static List<Account> createListAccounts(Integer numberOfAccounts) {
         List<Account> accounts = new List<Account>();
         for (Integer i = 0 ; i<numberOfAccounts ; i++) {
-            Account account = new Account(Name = 'Test Account' + Math.random());
+            Account account = new Account(Name = 'Test Account '+i);
             accounts.add(account);
         }
         return accounts;
     }
 
     //Order list creation
-    public static List<Order> createListOrders(Integer numberOfAccounts, Account account) {
+    public static List<Order> createListOrders(Integer numberOfOrder, Account account) {
         List<Order> orders = new List<Order>();
-        for (Integer i = 0 ; i<numberOfAccounts ; i++) {
-            Order order = new Order(AccountId=account.Id);
+        for (Integer i = 0 ; i<numberOfOrder ; i++) {
+            Order order = new Order(
+                AccountId=account.Id,
+                EffectiveDate=System.today(),
+                Status='Draft');
             orders.add(order);
         }
         return orders;
     }
 
     //OrderItem list creation
-    public static List<OrderItem> createListOrderItems(Integer numberOfAccounts, Order order, PricebookEntry priceBook) {
+    public static List<OrderItem> createListOrderItems(Integer numberOfOrderItem, Order order, PricebookEntry priceBook) {
         List<OrderItem> orderItems = new List<OrderItem>();
-        for (Integer i = 0 ; i<numberOfAccounts ; i++) {
+        for (Integer i = 0 ; i<numberOfOrderItem ; i++) {
             OrderItem orderItem = new OrderItem(
                 OrderId=order.Id, 
                 PricebookEntryId=priceBook.Id, 
-                Quantity=10,
-                UnitPrice=150);
+                Quantity=1,
+                UnitPrice=10);
             orderItems.add(orderItem);
         }
         return orderItems;
