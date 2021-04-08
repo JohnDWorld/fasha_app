@@ -1,28 +1,11 @@
-global class UpdateAccounts implements Database.Batchable<sObject>{
-    
-    global Database.QueryLocator start(Database.BatchableContext info){ 
-        //Requeter seulement les comptes qui ont au moins une commande avec le Status 'Ordered'
-        return Database.getQueryLocator('SELECT Id FROM Account');
- 
-    }
-     
-    global void execute(Database.BatchableContext info, List<Account> scope){      
-        list<Order> listOrders =  [SELECT Id, TotalAmount, AccountId FROM Order];
-        
-         for(integer i=0; i < scope.size(); i++){
-             Account myAccount = scope[i];
-             myAccount.Chiffre_d_affaire__c = 0;
-            for(integer j=0; j < listOrders.size(); j++){
-                if(listOrders[j].AccountId == myAccount.Id){
-                    myAccount.Chiffre_d_affaire__c = myAccount.Chiffre_d_affaire__c + listOrders[j].TotalAmount;
-                }                   
-            }
+public class UpdateAccounts{
+    public static void UpdateAccoutCA(List<Order> orders){
+        List<Account> accountsToUpdate = new List<Account>();
+        for(Order order : orders){
+            Account account = [SELECT chiffre_d_affaire__c FROM Account WHERE Id=:order.AccountId];
+            account.chiffre_d_affaire__c += order.TotalAmount;
+            accountsToUpdate.add(account);
         }
-        
-        update scope;
-    }    
-     
-    global void finish(Database.BatchableContext info){     
-        
-    } 
+        update accountsToUpdate;
+    }
  }
