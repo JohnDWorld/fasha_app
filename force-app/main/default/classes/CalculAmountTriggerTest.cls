@@ -1,5 +1,5 @@
 @isTest
-private class CalculAmountTest {
+private class CalculAmountTriggerTest {
     @TestSetup
     static void setup(){
         Account account = TestDataFactory.createAccount();
@@ -26,14 +26,13 @@ private class CalculAmountTest {
         List<OrderItem> orderItemsList = TestDataFactory.createListOrderItems(5, order, priceBook);
         insert orderItemsList;
     }
-    @isTest static void CalculAmountTest() {
-        List<Order> orderListTest = new List<Order>();
+    @isTest static void CalculAmountTriggerTest(){
+        Test.startTest();
         Order orderTest = [SELECT Id,ShipmentCost__c,TotalAmount,NetAmount__c FROM Order WHERE Name='Order Test'];
         orderTest.ShipmentCost__c = 10;
-        orderListTest.add(orderTest);
-        Test.startTest();
-        CalculAmount.CalculNetAmount(orderListTest);
+        update orderTest;
         Test.stopTest();
+        orderTest = [SELECT Id,ShipmentCost__c,TotalAmount,NetAmount__c FROM Order WHERE Name='Order Test'];
         System.assertEquals(50, orderTest.NetAmount__c);
     }
 }
