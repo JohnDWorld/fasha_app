@@ -1,5 +1,5 @@
 @isTest
-private class CalculAmountTriggerTest {
+Private class UpdateAccountCATriggerTest {
     @TestSetup
     static void setup(){
         Account account = TestDataFactory.createAccount();
@@ -26,11 +26,11 @@ private class CalculAmountTriggerTest {
         List<OrderItem> orderItemsList = TestDataFactory.createListOrderItems(5, order, priceBook);
         insert orderItemsList;
     }
-    @isTest static void CalculAmountTriggerTest(){
-        Order orderTest = [SELECT Id,ShipmentCost__c,TotalAmount,NetAmount__c FROM Order WHERE Name='Order Test'];
-        orderTest.ShipmentCost__c = 10;
+    @isTest static void UpdateAccountCATriggerTest() {
+        Order orderTest = [SELECT AccountId, TotalAmount, Status FROM Order WHERE Name='Order Test'];
+        orderTest.Status='Activated';
         update orderTest;
-        orderTest = [SELECT Id,ShipmentCost__c,TotalAmount,NetAmount__c FROM Order WHERE Name='Order Test'];
-        System.assertEquals(50, orderTest.NetAmount__c);
+        Account account = [SELECT chiffre_d_affaire__c FROM Account WHERE Name='Test Account'];
+        System.assertEquals(60, account.chiffre_d_affaire__c);
     }
 }

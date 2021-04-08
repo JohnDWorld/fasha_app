@@ -33,6 +33,7 @@ public abstract class TestDataFactory {
             AccountId=account.Id,
             Pricebook2Id=priceBook.Pricebook2Id,
             EffectiveDate=System.today(),
+            ShipmentCost__c=0,
             Status='Draft');
         return order;
     }
