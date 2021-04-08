@@ -2,7 +2,9 @@ public abstract class TestDataFactory {
 
     //Account creation
     public static Account createAccount() {
-        Account account = new Account(Name ='Test Account');
+        Account account = new Account(
+            Name ='Test Account',
+            chiffre_d_affaire__c=0);
         return account;
     }
 
