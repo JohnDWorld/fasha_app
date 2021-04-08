@@ -28,7 +28,8 @@ private class UpdateAccountsTest {
     }
     @isTest static void UpdateAccountsCATest(){
         List<Order> orderListTest = new List<Order>();
-        Order orderTest = [SELECT AccountId, TotalAmount FROM Order WHERE Name='Order Test'];
+        Order orderTest = [SELECT AccountId, TotalAmount, Status FROM Order WHERE Name='Order Test'];
+        orderTest.Status='Activated';
         orderListTest.add(orderTest);
         Test.startTest();
         UpdateAccounts.UpdateAccoutCA(orderListTest);

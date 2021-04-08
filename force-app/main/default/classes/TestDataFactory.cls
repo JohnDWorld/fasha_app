@@ -51,7 +51,9 @@ public abstract class TestDataFactory {
     public static List<Account> createListAccounts(Integer numberOfAccounts) {
         List<Account> accounts = new List<Account>();
         for (Integer i = 0 ; i<numberOfAccounts ; i++) {
-            Account account = new Account(Name = 'Test Account '+i);
+            Account account = new Account(
+                Name ='Test Account '+i,
+                chiffre_d_affaire__c=0);
             accounts.add(account);
         }
         return accounts;
