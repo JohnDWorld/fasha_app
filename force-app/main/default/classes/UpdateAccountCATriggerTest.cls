@@ -32,12 +32,10 @@ Private class UpdateAccountCATriggerTest {
     }
     @isTest static void UpdateAccountsCATriggerTestWithHundredOrders(){
         List<Order> orderListTest = [SELECT AccountId, TotalAmount, Status, Name FROM Order WHERE Name LIKE 'Order Test List _'];
-        List<Order> orderListToUpdate = new List<Order>();
         for(Order odr : orderListTest){
             odr.Status='Activated';
-            orderListToUpdate.add(odr);
         }
-        update orderListToUpdate;
+        update orderListTest;
         Account account = [SELECT chiffre_d_affaire__c FROM Account WHERE Name='Test Account'];
         System.assertEquals(100, account.chiffre_d_affaire__c);
     }
