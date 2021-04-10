@@ -23,7 +23,7 @@ private class UpdateAccountsTest {
         orderTest.Status='Activated';
         orderListTest.add(orderTest);
         Test.startTest();
-        UpdateAccounts.UpdateAccoutCA(orderListTest);
+        UpdateAccount.UpdateAccoutCA(orderListTest);
         Test.stopTest();
         Account account = [SELECT chiffre_d_affaire__c FROM Account WHERE Name='Test Account'];
         System.assertEquals(10, account.chiffre_d_affaire__c);

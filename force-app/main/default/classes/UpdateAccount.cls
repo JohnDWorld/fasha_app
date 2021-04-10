@@ -1,4 +1,4 @@
-public class UpdateAccounts{
+public class UpdateAccount{
     public static void UpdateAccoutCA(List<Order> orders){
         List<Account> accountsToUpdate = new List<Account>();
         for(Order order : orders){
