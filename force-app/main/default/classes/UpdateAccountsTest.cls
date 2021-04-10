@@ -16,15 +16,6 @@ private class UpdateAccountsTest {
 
         OrderItem orderItem = TestDataFactory.createOrderItem(order, priceBook);
         insert orderItem;
-
-        List<Account> accountsList = TestDataFactory.createListAccounts(5);
-        insert accountsList;
-
-        List<Order> ordersList = TestDataFactory.createListOrders(5, account);
-        insert ordersList;
-
-        List<OrderItem> orderItemsList = TestDataFactory.createListOrderItems(5, order, priceBook);
-        insert orderItemsList;
     }
     @isTest static void UpdateAccountsCATest(){
         List<Order> orderListTest = new List<Order>();
@@ -35,7 +26,6 @@ private class UpdateAccountsTest {
         UpdateAccounts.UpdateAccoutCA(orderListTest);
         Test.stopTest();
         Account account = [SELECT chiffre_d_affaire__c FROM Account WHERE Name='Test Account'];
-        System.assertEquals(60, account.chiffre_d_affaire__c);
+        System.assertEquals(10, account.chiffre_d_affaire__c);
     }
-    
-}
+} 

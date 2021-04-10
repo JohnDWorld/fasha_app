@@ -48,40 +48,22 @@ public abstract class TestDataFactory {
         return orderItem;
     }
 
-    //Account list creation
-    public static List<Account> createListAccounts(Integer numberOfAccounts) {
-        List<Account> accounts = new List<Account>();
-        for (Integer i = 0 ; i<numberOfAccounts ; i++) {
-            Account account = new Account(
-                Name ='Test Account '+i,
-                chiffre_d_affaire__c=0);
-            accounts.add(account);
-        }
-        return accounts;
-    }
-
     //Order list creation
-    public static List<Order> createListOrders(Integer numberOfOrder, Account account) {
+    public static List<Order> createListOrders(Account account, PricebookEntry priceBook, Integer numbersOfOrderForAccount) {
         List<Order> orders = new List<Order>();
-        for (Integer i = 0 ; i<numberOfOrder ; i++) {
-            Order order = new Order(
-                AccountId=account.Id,
-                EffectiveDate=System.today(),
-                Status='Draft');
+        for(Integer i=0; i<numbersOfOrderForAccount; i++){
+            Order order = TestDataFactory.createOrder(account, priceBook);
+            order.Name='Order Test List '+i;
             orders.add(order);
         }
         return orders;
     }
 
     //OrderItem list creation
-    public static List<OrderItem> createListOrderItems(Integer numberOfOrderItem, Order order, PricebookEntry priceBook) {
+    public static List<OrderItem> createListOrderItems(List<Order> orders, PricebookEntry priceBook) {
         List<OrderItem> orderItems = new List<OrderItem>();
-        for (Integer i = 0 ; i<numberOfOrderItem ; i++) {
-            OrderItem orderItem = new OrderItem(
-                OrderId=order.Id, 
-                PricebookEntryId=priceBook.Id, 
-                Quantity=1,
-                UnitPrice=10);
+        for (Order order : orders){
+            OrderItem orderItem = TestDataFactory.createOrderItem(order, priceBook);
             orderItems.add(orderItem);
         }
         return orderItems;

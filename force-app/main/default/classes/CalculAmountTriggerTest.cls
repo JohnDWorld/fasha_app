@@ -16,21 +16,12 @@ private class CalculAmountTriggerTest {
 
         OrderItem orderItem = TestDataFactory.createOrderItem(order, priceBook);
         insert orderItem;
-
-        List<Account> accountsList = TestDataFactory.createListAccounts(5);
-        insert accountsList;
-
-        List<Order> ordersList = TestDataFactory.createListOrders(5, account);
-        insert ordersList;
-
-        List<OrderItem> orderItemsList = TestDataFactory.createListOrderItems(5, order, priceBook);
-        insert orderItemsList;
     }
     @isTest static void CalculAmountTriggerTest(){
         Order orderTest = [SELECT Id,ShipmentCost__c,TotalAmount,NetAmount__c FROM Order WHERE Name='Order Test'];
-        orderTest.ShipmentCost__c = 10;
+        orderTest.ShipmentCost__c = 5;
         update orderTest;
         orderTest = [SELECT Id,ShipmentCost__c,TotalAmount,NetAmount__c FROM Order WHERE Name='Order Test'];
-        System.assertEquals(50, orderTest.NetAmount__c);
+        System.assertEquals(5, orderTest.NetAmount__c);
     }
 }

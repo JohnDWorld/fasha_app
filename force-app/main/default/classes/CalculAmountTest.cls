@@ -16,15 +16,6 @@ private class CalculAmountTest {
 
         OrderItem orderItem = TestDataFactory.createOrderItem(order, priceBook);
         insert orderItem;
-
-        List<Account> accountsList = TestDataFactory.createListAccounts(5);
-        insert accountsList;
-
-        List<Order> ordersList = TestDataFactory.createListOrders(5, account);
-        insert ordersList;
-
-        List<OrderItem> orderItemsList = TestDataFactory.createListOrderItems(5, order, priceBook);
-        insert orderItemsList;
     }
     @isTest static void CalculAmountTest() {
         List<Order> orderListTest = new List<Order>();
@@ -34,6 +25,6 @@ private class CalculAmountTest {
         Test.startTest();
         CalculAmount.CalculNetAmount(orderListTest);
         Test.stopTest();
-        System.assertEquals(50, orderTest.NetAmount__c);
+        System.assertEquals(0, orderTest.NetAmount__c);
     }
 }
