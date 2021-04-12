@@ -17,7 +17,7 @@ Private class UpdateAccountCATriggerTest {
         OrderItem orderItem = TestDataFactory.createOrderItem(order, priceBook);
         insert orderItem;
 
-        List<Order> ordersList = TestDataFactory.createListOrders(account, priceBook, 100);
+        List<Order> ordersList = TestDataFactory.createListOrders(account, priceBook, 200);
         insert ordersList;
 
         List<OrderItem> orderItemsList = TestDataFactory.createListOrderItems(ordersList, priceBook);
@@ -26,17 +26,23 @@ Private class UpdateAccountCATriggerTest {
     @isTest static void UpdateAccountCATriggerTest() {
         Order orderTest = [SELECT AccountId, TotalAmount, Status FROM Order WHERE Name='Order Test'];
         orderTest.Status='Activated';
+        Test.startTest();
         update orderTest;
+        Test.stopTest();
         Account account = [SELECT chiffre_d_affaire__c FROM Account WHERE Name='Test Account'];
         System.assertEquals(10, account.chiffre_d_affaire__c);
     }
     @isTest static void UpdateAccountsCATriggerTestWithHundredOrders(){
-        List<Order> orderListTest = [SELECT AccountId, TotalAmount, Status, Name FROM Order WHERE Name LIKE 'Order Test List _'];
+        List<Order> orderListTest = [SELECT AccountId, TotalAmount, Status, Name FROM Order WHERE Name LIKE 'Order Test List %'];
+        List<Order> orderListToUpd =new List<Order>();
         for(Order odr : orderListTest){
             odr.Status='Activated';
+            orderListToUpd.add(odr);
         }
-        update orderListTest;
+        Test.startTest();
+        update orderListToUpd;
+        Test.stopTest();
         Account account = [SELECT chiffre_d_affaire__c FROM Account WHERE Name='Test Account'];
-        System.assertEquals(100, account.chiffre_d_affaire__c);
+        System.assertEquals(2000, account.chiffre_d_affaire__c);
     }
 }

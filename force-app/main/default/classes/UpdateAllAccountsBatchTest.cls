@@ -11,7 +11,7 @@ private class UpdateAllAccountsBatchTest {
         List<Account> accounts = TestDataFactory.createListAccounts(10);
         insert accounts;
         for (Account account : accounts) {
-            List<Order> ordersList = TestDataFactory.createListOrders(account, priceBook, 5);
+            List<Order> ordersList = TestDataFactory.createListOrders(account, priceBook, 100);
             insert ordersList;
     
             List<OrderItem> orderItemsList = TestDataFactory.createListOrderItems(ordersList, priceBook);
@@ -19,18 +19,20 @@ private class UpdateAllAccountsBatchTest {
         }
     }
     @isTest static void UpdateAllAccountsBatchTest() {
-        List<Order> orderListTest = [SELECT AccountId, TotalAmount, Status, Name FROM Order WHERE Name LIKE 'Order Test List _'];
+        List<Order> orderListTest = [SELECT AccountId, TotalAmount, Status, Name FROM Order WHERE Name LIKE 'Order Test List %'];
+        List<Order> orderListToUpd =new List<Order>();
         for(Order odr : orderListTest){
             odr.Status='Activated';
+            orderListToUpd.add(odr);
         }
-        update orderListTest;
         Test.startTest();
+        update orderListToUpd;
         UpdateAllAccountsBatch uaab = new UpdateAllAccountsBatch();
         Id batchId = Database.executeBatch(uaab);
         Test.stopTest();
         List<Account> accounts = [SELECT chiffre_d_affaire__c FROM Account];
         for (Account account : accounts) {
-            System.assertEquals(50, account.chiffre_d_affaire__c);
+            System.assertEquals(1000, account.chiffre_d_affaire__c);
         }
     }
 }

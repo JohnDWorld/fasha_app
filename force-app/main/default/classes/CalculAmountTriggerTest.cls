@@ -20,7 +20,9 @@ private class CalculAmountTriggerTest {
     @isTest static void CalculAmountTriggerTest(){
         Order orderTest = [SELECT Id,ShipmentCost__c,TotalAmount,NetAmount__c FROM Order WHERE Name='Order Test'];
         orderTest.ShipmentCost__c = 5;
+        Test.startTest();
         update orderTest;
+        Test.stopTest();
         orderTest = [SELECT Id,ShipmentCost__c,TotalAmount,NetAmount__c FROM Order WHERE Name='Order Test'];
         System.assertEquals(5, orderTest.NetAmount__c);
     }

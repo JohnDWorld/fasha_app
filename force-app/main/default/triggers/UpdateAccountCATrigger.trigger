@@ -1,3 +1,3 @@
 trigger UpdateAccountCATrigger on Order (after update) {
-    UpdateAccount.UpdateAccoutCA(Trigger.New);
+    UpdateAccount.UpdateAccoutCA(Trigger.newMap);
 }

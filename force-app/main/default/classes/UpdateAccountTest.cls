@@ -1,5 +1,5 @@
 @isTest
-private class UpdateAccountsTest {
+private class UpdateAccountTest {
     @TestSetup
     static void setup(){
         Account account = TestDataFactory.createAccount();
@@ -18,14 +18,15 @@ private class UpdateAccountsTest {
         insert orderItem;
     }
     @isTest static void UpdateAccountsCATest(){
-        List<Order> orderListTest = new List<Order>();
-        Order orderTest = [SELECT AccountId, TotalAmount, Status FROM Order WHERE Name='Order Test'];
+        Map<Id, Order> orderMapTest = new Map<Id, Order>{};
+        Order orderTest = [SELECT Id, AccountId, TotalAmount, Status FROM Order WHERE Name='Order Test'];
         orderTest.Status='Activated';
-        orderListTest.add(orderTest);
+        update orderTest;
+        orderMapTest.put(orderTest.Id, orderTest);
         Test.startTest();
-        UpdateAccount.UpdateAccoutCA(orderListTest);
+        UpdateAccount.UpdateAccoutCA(orderMapTest);
         Test.stopTest();
         Account account = [SELECT chiffre_d_affaire__c FROM Account WHERE Name='Test Account'];
-        System.assertEquals(10, account.chiffre_d_affaire__c);
+        System.assertEquals(20, account.chiffre_d_affaire__c);
     }
-} 
+}

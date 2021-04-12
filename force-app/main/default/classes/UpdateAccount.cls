@@ -1,12 +1,12 @@
 public class UpdateAccount{
-    public static void UpdateAccoutCA(List<Order> orders){
+    public static void UpdateAccoutCA(Map<Id,Order> ordersMap){
         List<Account> accountsToUpdate = new List<Account>();
-        for(Order order : orders){
-            if(order.Status=='Activated'){
-                Account account = [SELECT Name, chiffre_d_affaire__c FROM Account WHERE Id=:order.AccountId];
-                account.chiffre_d_affaire__c += order.TotalAmount;
-                update account;
+        for(Account acct : [SELECT Id, chiffre_d_affaire__c, (SELECT Id, TotalAmount FROM Orders WHERE Id IN :ordersMap.keySet() AND Status='Activated') FROM Account]){
+            for(Order odr : acct.orders){
+                acct.chiffre_d_affaire__c += odr.TotalAmount;
             }
+            accountsToUpdate.add(acct);
         }
+        update accountsToUpdate;     
     }
- }
+}
