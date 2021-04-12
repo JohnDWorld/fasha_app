@@ -1,10 +1,30 @@
 public with sharing class MyTeamOrdersController {
-    public decimal SumOders{
-        get{
-			AggregateResult groupedResults = [SELECT SUM(TotalAmount) total FROM Order];
-			return (decimal)groupedResults.get('total');
+    public List<SelectOption> teamOption{set;}
+    public List<CollaborationGroup> cgList {get;set;}
+    public List<CollaborationGroupMember> cgmList {get;set;}
+    public List<Order> orderList {get;set;}
+    public Id selectedTeamId {get;set;}
 
+    public List<SelectOption> getTeamOption(){
+        List<SelectOption> options = new List<SelectOption>();
+        cgList = [Select Id,Name From CollaborationGroup];
+        for(CollaborationGroup cg : cgList) {
+            options.add(new SelectOption(cg.Id,cg.Name));
         }
-        set;
+        return options;
+    }
+
+    public void OrderAccList(){
+        List<Order> orders = new List<Order>();
+        if(selectedTeamId != Null){
+            cgmList = [SELECT MemberId FROM CollaborationGroupMember WHERE CollaborationGroupId=:selectedTeamId];
+            for(CollaborationGroupMember cgm : cgmList){
+                List<Order> orderListToAdd = [SELECT Name, TotalAmount, CreatedById FROM Order WHERE CreatedById=:cgm.MemberId];
+                for(Order order : orderListToAdd){
+                    orders.add(order);
+                }
+            }
+        }
+        orderList = orders;
     }
 }

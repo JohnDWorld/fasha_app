@@ -1,7 +1,23 @@
-<apex:page controller="MyteamOrdersController" >
-    <div>
-        <h1>
-            Sum of my team orders: <apex:outputText value="{!SumOders}" />
-        </h1>
-    </div>
+<apex:page controller="MyTeamOrdersController">
+    <apex:pageBlock title="Order by Commercial by Team">
+        <apex:form >
+            <apex:pageBlockSection title="Filter by Team">
+                <apex:pageBlockSectionItem>
+                    <apex:outputLabel value="Choose the Team" /> 
+                    <apex:selectList value="{!selectedTeamId}" size="1"  >
+                        <apex:selectOption itemValue="" itemLabel="-- None --"/>
+                        <apex:selectOptions value="{!teamOption}" />
+                    </apex:selectList>
+                </apex:pageBlockSectionItem>
+                <apex:commandButton value="Team Choice" action="{!OrderAccList}"/>
+                <apex:pageBlockSectionItem>
+                    <apex:pageBlockTable value="{!orderList}" var="order">
+                        <apex:column value="{!order.CreatedById}"/>
+                        <apex:column value="{!order.Name}"/>
+                        <apex:column value="{!order.TotalAmount}"/>
+                        </apex:pageBlockTable>
+                </apex:pageBlockSectionItem>
+            </apex:pageBlockSection>
+      </apex:form>
+    </apex:pageBlock>
 </apex:page>
