@@ -48,6 +48,28 @@ public abstract class TestDataFactory {
         return orderItem;
     }
 
+    //CollaborationGroup creation
+    public static CollaborationGroup createCollaborationGroup(){
+        CollaborationGroup cg = new CollaborationGroup(
+            Name='Group Test',
+            CollaborationType='Public'
+        );
+        return cg;
+    }
+
+    //CollaborationGroupMember creation
+    public static List<CollaborationGroupMember> createCollaborationGroupMember(List<User> users, CollaborationGroup cg){
+        List<CollaborationGroupMember> cgmList = new List<CollaborationGroupMember>();
+        for(User user: users){
+            CollaborationGroupMember cgm = new CollaborationGroupMember(
+                MemberId=user.Id,
+                CollaborationGroupId=cg.Id
+            );
+            cgmList.add(cgm);
+        }
+        return cgmList;
+    }
+
     //Account list creation
     public static List<Account> createListAccounts(Integer numberOfAccounts) {
         List<Account> accounts = new List<Account>();
@@ -79,5 +101,28 @@ public abstract class TestDataFactory {
             orderItems.add(orderItem);
         }
         return orderItems;
+    }
+
+    //User list creation
+    public static List<User> createListUsers(Integer numberOfUsers){
+        List<User> users = new List<User>();
+        Profile profile = [SELECT Id FROM Profile WHERE Name='Standard User'];
+        for(Integer i=0; i<numberOfUsers; i++){
+            Blob b = Crypto.generateAesKey(128);
+            String h = EncodingUtil.convertToHex(b);
+            String uId = h.substring(0, 8);
+            User user = new User(
+                Alias = uId, 
+                Email=uId+'@testorg.com', 
+                EmailEncodingKey='UTF-8', 
+                LastName='UserTest'+i, 
+                LanguageLocaleKey='en_US', 
+                LocaleSidKey='en_US', 
+                ProfileId = profile.Id, 
+                TimeZoneSidKey='Europe/Paris', 
+                UserName=uId+'@testorg.com');
+            users.add(user);
+        }
+        return users;
     }
 }
