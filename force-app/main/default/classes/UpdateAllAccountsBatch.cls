@@ -1,12 +1,13 @@
 global class UpdateAllAccountsBatch implements Database.Batchable<sObject>{
     
     global Database.QueryLocator start(Database.BatchableContext info){ 
-        //Requeter seulement les comptes qui ont au moins une commande avec le Status 'Ordered'
+        //Request only account with at least 1 order with Status = 'Activated'
         return Database.getQueryLocator('SELECT Id, chiffre_d_affaire__c, (SELECT TotalAmount, Status FROM Orders WHERE Status=\'Activated\') FROM Account');
     }
-     
+    
     global void execute(Database.BatchableContext info, List<Account> scope){
         List<Account> allAccountToUpdate = new List<Account>();
+        //Update each turnover'account for all accounts
         for(Account account: scope){
             Decimal totalAmount = 0;
             for(Order order: account.orders){
@@ -16,9 +17,7 @@ global class UpdateAllAccountsBatch implements Database.Batchable<sObject>{
             allAccountToUpdate.add(account);
         }
         update allAccountToUpdate;
-    }    
-     
-    global void finish(Database.BatchableContext info){     
+    }
 
-    } 
+    global void finish(Database.BatchableContext info){} 
  }

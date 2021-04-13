@@ -1,5 +1,6 @@
 @isTest
 public class MyTeamOrdersControllerTest {
+    //Setup the Data for the test
     @TestSetup
     static void setup(){
         Product2 product2 = TestDataFactory.createProduct2();
@@ -30,11 +31,15 @@ public class MyTeamOrdersControllerTest {
         MyTeamOrdersController mtoController = new MyTeamOrdersController();
 
         mtoController.teamOption();
+        //1 Group was create so we have 1 option
         System.assertEquals(1, mtoController.teamOption.size());
         
         List<SelectOption> so = mtoController.teamOption;
+        //Place the Id of option in selectedTeamId
         mtoController.selectedTeamId=so[0].getValue();
+        
         mtoController.OrderAccList();
+        //10 Orders were create so we have 10 orders in the orders'list
         System.assertEquals(10, mtoController.orderList.size());
     }
 }

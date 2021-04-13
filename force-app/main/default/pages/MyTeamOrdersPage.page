@@ -1,16 +1,20 @@
 <apex:page controller="MyTeamOrdersController">
     <apex:pageBlock title="Order by Commercial by Team">
         <apex:form >
+            <!--Filter Team Block-->
             <apex:pageBlockSection title="Filter by Team">
                 <apex:pageBlockSectionItem>
+                    <!--Selection of the Team to display-->
                     <apex:outputLabel value="Choose the Team" /> 
                     <apex:selectList value="{!selectedTeamId}" size="1"  >
                         <apex:selectOption itemValue="" itemLabel="-- None --"/>
                         <apex:selectOptions value="{!teamOption}" />
                     </apex:selectList>
                 </apex:pageBlockSectionItem>
+                <!--Button to launch action to find order by commercial-->
                 <apex:commandButton value="Team Choice" action="{!OrderAccList}"/>
                 <apex:pageBlockSectionItem>
+                    <!--Display the order by commercial-->
                     <apex:pageBlockTable value="{!orderList}" var="order">
                         <apex:column value="{!order.CreatedById}"/>
                         <apex:column value="{!order.Name}"/>
