@@ -1,3 +1,9 @@
+/**
+ * 
+ * Class to setup data for the test
+ * 
+ * @author JohnDWorld
+ */
 public abstract class TestDataFactory {
 
     //Account creation

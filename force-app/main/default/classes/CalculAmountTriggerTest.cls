@@ -1,3 +1,9 @@
+/**
+ * 
+ * Class test for CalculAmount and his Trigger
+ * 
+ * @author JohnDWorld
+ */
 @isTest
 private class CalculAmountTriggerTest {
     //Setup the Data for the test
