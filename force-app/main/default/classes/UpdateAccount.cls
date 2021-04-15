@@ -1,3 +1,9 @@
+/**
+ * 
+ * Class to calcul the account's turnover in function of his orders
+ * 
+ * @author JohnDWorld
+ */
 public class UpdateAccount{
     //Static method to update the turnover of account
     public static void UpdateAccoutCA(Map<Id,Order> ordersMap){
