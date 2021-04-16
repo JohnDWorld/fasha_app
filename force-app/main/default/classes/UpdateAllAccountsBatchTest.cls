@@ -15,7 +15,7 @@ private class UpdateAllAccountsBatchTest {
         PricebookEntry priceBook = TestDataFactory.createPriceBook(product2);
         insert priceBook;
 
-        List<Account> accounts = TestDataFactory.createListAccounts(5);
+        List<Account> accounts = TestDataFactory.createListAccounts(10);
         insert accounts;
         for (Account account : accounts) {
             List<Order> ordersList = TestDataFactory.createListOrders(account, priceBook, 200);
